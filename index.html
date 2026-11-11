@@ -1,6 +1,7 @@
 <title>Krep Labs</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="claude:viewport-fit-sides" content="cover">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap">
@@ -221,6 +222,9 @@
   if('scrollRestoration' in history){ try{ history.scrollRestoration='manual'; }catch(e){} }
   window.scrollTo(0,0);
   var lenis=null;
+  function toTop(){ try{ window.scrollTo(0,0); }catch(e){} try{ if(lenis) lenis.scrollTo(0,{immediate:true,force:true}); }catch(e){} try{ if(typeof ScrollTrigger!=='undefined') ScrollTrigger.refresh(); }catch(e){} }
+  window.addEventListener('load', toTop);
+  window.addEventListener('pageshow', function(e){ if(e && e.persisted) toTop(); });
   document.getElementById('yr').textContent = new Date().getFullYear();
 
   var navEl=document.getElementById('nav');
@@ -255,6 +259,7 @@
     try{ lenis=new Lenis({lerp:0.09, smoothWheel:true});
       if(hasG){ lenis.on('scroll',ScrollTrigger.update); gsap.ticker.add(function(t){lenis.raf(t*1000);}); gsap.ticker.lagSmoothing(0); }
       else { (function raf(t){lenis.raf(t);requestAnimationFrame(raf);})(0); }
+      lenis.scrollTo(0,{immediate:true});
     }catch(e){}
   }
   if(hasG && !reduce){
@@ -263,14 +268,14 @@
     tl.from('.giant',{opacity:0,y:30,duration:.9})
       .from('.hero .stats',{opacity:0,y:16,duration:.6},'-=.55')
       .from('.hero .lede',{opacity:0,y:16,duration:.6},'-=.5')
-      .from('.hero .cta-row',{opacity:0,y:14,duration:.5},'-=.45')
-      .from('.hero-side',{opacity:0,duration:.8},'-=.4');
+      .from('.hero .cta-row',{opacity:0,y:14,duration:.5},'-=.45');
     gsap.utils.toArray('[data-reveal]').forEach(function(el){
       if(el.closest('.hero')) return;
       gsap.from(el,{opacity:0,y:26,duration:.7,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 90%'}});
     });
     gsap.to('.hero-viz',{opacity:0, scale:0.9, yPercent:-10, transformOrigin:'50% 42%', ease:'none', scrollTrigger:{trigger:'.hero', start:'24% top', end:'74% top', scrub:true}});
     gsap.to('.hero-in',{opacity:0, scale:0.92, yPercent:-10, transformOrigin:'0% 45%', ease:'none', scrollTrigger:{trigger:'.hero', start:'24% top', end:'74% top', scrub:true}});
+    gsap.to('.hero-side',{opacity:0, scale:0.92, yPercent:-10, transformOrigin:'100% 45%', ease:'none', scrollTrigger:{trigger:'.hero', start:'24% top', end:'74% top', scrub:true}});
   }
 
   (function(){
