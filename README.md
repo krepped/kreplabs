@@ -1,8 +1,3 @@
-<!--
-  The images are made by _claude/kreplabs-readme.py in the krepped.nl site folder and served from
-  krepped.nl/github/kreplabs/. When one changes, add or bump ?v=N on its URL here, or GitHub keeps the old copy.
--->
-
 <p>
 <a href="https://kreplabs.com"><img src="https://krepped.nl/github/kreplabs/header.svg" alt="Krep Labs. Founded 2026, 1 live product in production, built and maintained end to end. We build software, and keep it safe. kreplabs.com" width="100%"></a>
 </p>
