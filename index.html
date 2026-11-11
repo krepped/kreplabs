@@ -1,4 +1,5 @@
 <title>Krep Labs</title>
+<script>try{history.scrollRestoration='manual';}catch(e){}window.scrollTo(0,0);</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -222,9 +223,11 @@
   if('scrollRestoration' in history){ try{ history.scrollRestoration='manual'; }catch(e){} }
   window.scrollTo(0,0);
   var lenis=null;
-  function toTop(){ try{ window.scrollTo(0,0); }catch(e){} try{ if(lenis) lenis.scrollTo(0,{immediate:true,force:true}); }catch(e){} try{ if(typeof ScrollTrigger!=='undefined') ScrollTrigger.refresh(); }catch(e){} }
-  window.addEventListener('load', toTop);
-  window.addEventListener('pageshow', function(e){ if(e && e.persisted) toTop(); });
+  function toTop(){ try{ window.scrollTo(0,0); }catch(e){} try{ if(lenis){ lenis.scrollTo(0,{immediate:true,force:true}); } }catch(e){} }
+  function hardTop(){ toTop(); requestAnimationFrame(function(){ toTop(); try{ if(typeof ScrollTrigger!=='undefined') ScrollTrigger.refresh(); }catch(e){} }); setTimeout(toTop,120); setTimeout(toTop,400); }
+  hardTop();
+  window.addEventListener('load', hardTop);
+  window.addEventListener('pageshow', function(e){ if(e && e.persisted) hardTop(); });
   document.getElementById('yr').textContent = new Date().getFullYear();
 
   var navEl=document.getElementById('nav');
